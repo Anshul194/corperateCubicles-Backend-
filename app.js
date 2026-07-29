@@ -83,7 +83,9 @@ const ALLOWED_ORIGINS = [
 
   "https://corperate-cubicles.vercel.app",
 
-  "https://corperate-cubicles.vercel.app/"
+  "https://corperate-cubicles.vercel.app/",
+  "https://corperate-cubicles-admin-ba4i.vercel.app/",
+  "https://corperate-cubicles-admin-ba4i.vercel.app"
 ];
 
 const corsOptions = {
