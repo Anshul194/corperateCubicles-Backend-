@@ -70,6 +70,7 @@ import zoomRouter from "./zoomRoutes.js"; // Zoom router
 import lapaasTicketRouter from "./lapaasTicketRoutes.js";
 import aboutRouter from "./aboutRoutes.js";
 import siteContentRouter from "./siteContentRoutes.js";
+import quickLinkRouter from "./quickLinkRoutes.js";
 import { Route } from "express";
 
 router.get("/", (req, res) => {
@@ -138,6 +139,7 @@ router.use("/events", eventRouter); // Add event routes
 router.use("/leaderboard", leaderboardRouter); // Add leaderboard routes
 router.use("/dashboard", dashboardRouter); // Add user dashboard route
 router.use("/banners", bannerRouter); // Add banner routes
+router.use("/quick-links", quickLinkRouter);
 router.use("/news", newsRouter); // Add news routes
 router.use("/personality", personalityRouter); // Add personality test routes
 router.use("/zoom", zoomRouter); // Zoom routes
