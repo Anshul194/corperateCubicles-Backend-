@@ -1,0 +1,25 @@
+PORT=4000
+# MONGO_URI=mongodb://localhost:27017/kesariya
+MONGO_URI=mongodb+srv://tulsisatasiya05:X4NaEv6X9DFhjfOp@cluster0.1snwird.mongodb.net/kesariya?retryWrites=true&w=majority&appName=Cluster0
+
+
+REDIS_HOST=210.89.45.76
+REDIS_PORT=6379
+REDIS_PASSWORD=5b1e924474068dfd
+JWT_ACCESS_TOKEN_SECRET_KEY=secret_key
+JWT_REFRESH_TOKEN_SECRET_KEY = secret_key2
+JWT_EMAIL_RESET_SECRET_KEY=secret_key3
+SALT = 10
+
+
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=smaisuriya1206@gmail.com
+MAIL_PASSWORD=ojrllidvlbkyopdu
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS=smaisuriya1206@gmail.com
+MAIL_FROM_NAME="Kesariya"
+
+
+

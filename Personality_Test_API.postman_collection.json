@@ -1,0 +1,182 @@
+{
+    "info": {
+        "_postman_id": "personality-api-collection",
+        "name": "Personality API",
+        "description": "Collection for Personality Test (MBTI) management and submission. Supports 5-point scale answers.",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Questions",
+            "item": [
+                {
+                    "name": "Get All Questions",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/personality/questions",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "personality",
+                                "questions"
+                            ]
+                        },
+                        "description": "Fetch all personality test questions."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Create Questions (Bulk)",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"questions\": [\n        {\n            \"question\": \"You enjoy vibrant social events with lots of people.\",\n            \"dimension\": \"IE\",\n            \"agreeType\": \"E\",\n            \"disagreeType\": \"I\",\n            \"weight\": 1\n        },\n        {\n            \"question\": \"You often spend time exploring unrealistic yet intriguing ideas.\",\n            \"dimension\": \"SN\",\n            \"agreeType\": \"N\",\n            \"disagreeType\": \"S\",\n            \"weight\": 1\n        }\n    ]\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/personality/questions",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "personality",
+                                "questions"
+                            ]
+                        },
+                        "description": "Create new questions for the personality test."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Update Question",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"question\": \"UPDATED: You enjoy vibrant social events with lots of people.\",\n    \"dimension\": \"IE\",\n    \"agreeType\": \"E\",\n    \"disagreeType\": \"I\",\n    \"weight\": 1.5\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/personality/questions/:id",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "personality",
+                                "questions",
+                                ":id"
+                            ],
+                            "variable": [
+                                {
+                                    "key": "id",
+                                    "value": "REPLACE_WITH_VALID_ID"
+                                }
+                            ]
+                        },
+                        "description": "Update an existing personality test question."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Delete Question",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/personality/questions/:id",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "personality",
+                                "questions",
+                                ":id"
+                            ],
+                            "variable": [
+                                {
+                                    "key": "id",
+                                    "value": "REPLACE_WITH_VALID_ID"
+                                }
+                            ]
+                        },
+                        "description": "Delete a personality test question."
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Submission",
+            "item": [
+                {
+                    "name": "Submit Test",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"answers\": [\n        {\n            \"questionId\": \"REPLACE_WITH_VALID_ID\",\n            \"answer\": \"strongly_agree\"\n        },\n        {\n            \"questionId\": \"REPLACE_WITH_VALID_ID\",\n            \"answer\": \"disagree\"\n        }\n    ]\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/personality/submit",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "personality",
+                                "submit"
+                            ]
+                        },
+                        "description": "Submit answers to calculate personality type and get suitable courses.\n**Requires JWT Authentication to save results.**\n\nValid answers are: \n- strongly_agree\n- agree\n- neutral\n- disagree\n- strongly_disagree"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get My Results",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/personality/my-results",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "personality",
+                                "my-results"
+                            ]
+                        },
+                        "description": "Fetch personal history of personality test results.\n**Requires JWT Authentication.**"
+                    },
+                    "response": []
+                }
+            ]
+        }
+    ],
+    "variable": [
+        {
+            "key": "base_url",
+            "value": "http://localhost:4000",
+            "type": "string"
+        }
+    ]
+}

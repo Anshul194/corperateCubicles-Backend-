@@ -1,0 +1,50 @@
+{
+  "info": {
+    "name": "Buy Now API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_postman_id": "buy-now-api-collection"
+  },
+  "item": [
+    {
+      "name": "Buy Now (Guest)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"courseId\": \"REPLACE_WITH_COURSE_ID\",\n  \"guestEmail\": \"guest@example.com\",\n  \"guestName\": \"Guest User\",\n  \"paymentProvider\": \"razorpay\",\n  \"couponCode\": \"COUPON2024\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/checkout/buy-now",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "checkout", "buy-now"]
+        }
+      }
+    },
+    {
+      "name": "Buy Now (Logged In)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer REPLACE_WITH_JWT_TOKEN" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"courseId\": \"REPLACE_WITH_COURSE_ID\",\n  \"paymentProvider\": \"razorpay\",\n  \"couponCode\": \"COUPON2024\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/checkout/buy-now",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "checkout", "buy-now"]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+Introduction to JavaScript
+
+Basics of JS for beginners
+
+JavaScript is a versatile language used for web development. In this lesson, we will cover variables, data types, and basic syntax.
+
+JavaScript is a high-level, interpreted programming language that enables you to create dynamically updating content, control multimedia, animate images, and much more. It's one of the core technologies of the World Wide Web, alongside HTML and CSS.
+
+In this comprehensive introduction, we'll explore the fundamental concepts that make JavaScript such a powerful and essential tool for modern web development. You'll learn about variables, which are containers for storing data values, and the different data types that JavaScript supports including strings, numbers, booleans, arrays, and objects.
+
+We'll also cover the basic syntax rules that govern how JavaScript code is written and structured. Understanding these fundamentals is crucial for anyone looking to become proficient in web development.

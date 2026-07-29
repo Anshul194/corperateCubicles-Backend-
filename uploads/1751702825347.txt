@@ -1,0 +1,10 @@
+export const new=async()=>{
+
+const page=1;
+const limit=10;
+const skip=page*limit;
+
+
+const data= await Users.find().skip();
+
+]

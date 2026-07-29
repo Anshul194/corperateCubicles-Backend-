@@ -1,0 +1,19 @@
+node_modules
+.env
+.env.*
+!.env.example
+
+# Secrets — never commit credentials
+config/firebase-service-account.json
+*.pem
+*.key
+
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.flv
+*.wmv
+*.mpg
+*.mpeg
+*.webm

@@ -1,0 +1,1577 @@
+{
+	"info": {
+		"_postman_id": "0cfd5fb4-1f5a-4639-ae4a-868ac61d91b7",
+		"name": "Lms",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "45408564",
+		"_collection_link": "https://nexprism-coders.postman.co/workspace/Nexprism-Coders-Workspace~894364b1-2c78-4d2c-86d7-b4802f388dab/collection/45396349-0cfd5fb4-1f5a-4639-ae4a-868ac61d91b7?action=share&source=collection_link&creator=45408564"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "signup",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"tulsisatasiya05@gmail.com\",\r\n  \"password\": \"Test@1234\",\r\n  \"fullName\": \"Test User\",\r\n  \"role\": \"student\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/signup",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODM3NTFjNWVmN2ZhOGRkM2Q1MjY4YWEiLCJyb2xlcyI6InN0dWRlbnQiLCJpYXQiOjE3NDg1MzkxMjksImV4cCI6MTc0ODk3MTEyOX0.aq_txPeCBo4qwTLWwiKn24Wmi5kjajel6VKZcJEBSBQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n//   \"email\": \"test@example1234.com\",\r\n//   \"password\": \"Abc@9019\"\r\n//  \"email\": \"test@example12345.com\",\r\n//   \"password\": \"Test@1234\"\r\n \"email\": \"tulsisatasiya05@gmail.com\",\r\n  \"password\": \"Abc@123\"\r\n//   \"email\": \"tulsisatasiya051@gmail.com\",\r\n//   \"password\": \"Test@1234\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "change-password",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODM4YTZlOThhZjJhZDk3OTQxNWNiOTkiLCJyb2xlcyI6InN0dWRlbnQiLCJpYXQiOjE3NDg1NDk5MzEsImV4cCI6MTc0ODk4MTkzMX0.YWzdQaMFt4e1hdYxMDgEBXHfiPkQz6-2jaG0Uyklf3g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"oldPassword\": \"Abc@9019\",\r\n  \"newPassword\": \"Abc@90199\",\r\n  \"confirmPassword\": \"Abc@90199\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/change-password",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"change-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request Copy",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "forgot-password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"tulsisatasiya05@gmail.com\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/forgot-password",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"forgot-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reset-password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n{\r\n  \"token\": \"26b29dc384f1d4b5dec93d30aa9c5480c9002e41952df79a206c8e5074701da2\",\r\n  \"newPassword\": \"Abc@123\",\r\n  \"confirmPassword\": \"Abc@123\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/reset-password",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"reset-password"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Category",
+			"item": [
+				{
+					"name": "Get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/coursecategories/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"coursecategories",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getbyid",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/coursecategories/683a08c0acc8bba791ccc275",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"coursecategories",
+								"683a08c0acc8bba791ccc275"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "6838a610ead1ab833ae8e835",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"twos\",\r\n    \"slug\":\"one_1\",\r\n    \"status\":\"active\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/coursecategories/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"coursecategories",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"three\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/coursecategories/6838b6d74ccc799db6148b79",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"coursecategories",
+								"6838b6d74ccc799db6148b79"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/coursecategories/6838b7f6b9fbe0a0b6f7ebe7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"coursecategories",
+								"6838b7f6b9fbe0a0b6f7ebe7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODM5ZjFkNWMxMTlmOTM0YzMwMmFjZDciLCJyb2xlcyI6ImFkbWluIiwiaWF0IjoxNzQ4NjI3OTM1LCJleHAiOjE3NDkwNTk5MzV9.p5sLm7Y7lM7Nd07EqDvzInQdTYeNLXd5fxW_pSNDOkk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "ai ml",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "7OQVVz7aH/ahd.png"
+								},
+								{
+									"key": "status",
+									"value": "active",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:5000/coursecategories/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"coursecategories",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "subCategory",
+			"item": [
+				{
+					"name": "New Request",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/subcategories/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"subcategories",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getbyid",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/subcategories/6838a8a9b93da5a319b92e38",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"subcategories",
+								"6838a8a9b93da5a319b92e38"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Web Development\",\r\n  \"slug\": \"web-development\",\r\n  \"categoryId\": \"6838a610ead1ab833ae8e835\",\r\n  \"status\": \"active\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/subcategories/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"subcategories",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"abcd12\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/subcategories/6838b88db9fbe0a0b6f7ebf1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"subcategories",
+								"6838b88db9fbe0a0b6f7ebf1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/subcategories/6838b88db9fbe0a0b6f7ebf1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"subcategories",
+								"6838b88db9fbe0a0b6f7ebf1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "module",
+			"item": [
+				{
+					"name": "get",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODM4YzVkOWQ4MzkyMjY2NGRhMjc0NzUiLCJyb2xlcyI6ImFkbWluIiwiaWF0IjoxNzQ4NTUyMDY2LCJleHAiOjE3NDg5ODQwNjZ9.lKu9iObKwk-4NmgCD6-0j87oL7qJqvBp2ntP2QeeWe0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/module",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"module"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add Copy",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODM4YzVkOWQ4MzkyMjY2NGRhMjc0NzUiLCJyb2xlcyI6ImFkbWluIiwiaWF0IjoxNzQ4NTUyMDY2LCJleHAiOjE3NDg5ODQwNjZ9.lKu9iObKwk-4NmgCD6-0j87oL7qJqvBp2ntP2QeeWe0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/module?search=Newsss1234&page=1&limit=5&sort={\"order\":1}&filters={\"isPublished\":true}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"module"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "Newsss1234"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "5"
+								},
+								{
+									"key": "sort",
+									"value": "{\"order\":1}"
+								},
+								{
+									"key": "filters",
+									"value": "{\"isPublished\":true}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"courseId\": \"683764c3e572d08d79058814\",\r\n  \"title\": \"Introduction to Algorithmss Newss1\",\r\n  \"description\": \"Learn basic algorithms\",\r\n  \"order\": 1,\r\n  \"estimatedDuration\": 45,\r\n  \"isPublished\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/module/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"module",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"courseId\": \"683764c3e572d08d79058814\",\r\n  \"title\": \"Introduction to Algorithmss Newsss1234\",\r\n  \"description\": \"Learn basic algorithms Newss123\",\r\n  \"order\": 4,\r\n  \"estimatedDuration\": 50,\r\n  \"isPublished\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/module/6839f248653f599fd15521ba",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"module",
+								"6839f248653f599fd15521ba"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Copy",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/module/6839edf1fb1e644f22f9be72",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"module",
+								"6839edf1fb1e644f22f9be72"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Course",
+			"item": [
+				{
+					"name": "New Request",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODM4YzVkOWQ4MzkyMjY2NGRhMjc0NzUiLCJyb2xlcyI6ImFkbWluIiwiaWF0IjoxNzQ4NjI5MzU3LCJleHAiOjE3NDkwNjEzNTd9.DqIv9EL33fGdRZG1JWxWINY-wlGOPM-H7C0A9Hy-z8M",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"JavaScript Fundamentals 12345678\",\r\n  \"description\": \"Master the basics of JavaScript programming\",\r\n  \"thumbnail\": \"https://example.com/js-thumb.jpg\",\r\n  \"categoryId\": \"6838a610ead1ab833ae8e835\",\r\n  \"subCategoryId\": \"6838a8a9b93da5a319b92e38\",\r\n  \"level\": \"beginner\",\r\n  \"price\": 29.99,\r\n  \"currency\": \"USD\",\r\n  \"duration\": \"600\",\r\n  \"instructorId\": \"6838b721d95033e6e72ef0d2\",\r\n  \"isPublished\": true,\r\n  \"enrollmentType\": \"paid\",\r\n  \"maxStudents\": 100,\r\n  \"tags\": [\"javascript\", \"programming\", \"frontend\"],\r\n  \"prerequisites\": [],\r\n  \"completionCriteria\": \"Finish all video lessons and quizzes\",\r\n  \"certificateTemplate\": \"basic_certificate\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/courses/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"courses",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request Copy",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODM4YzVkOWQ4MzkyMjY2NGRhMjc0NzUiLCJyb2xlcyI6ImFkbWluIiwiaWF0IjoxNzQ4NjI5MzU3LCJleHAiOjE3NDkwNjEzNTd9.DqIv9EL33fGdRZG1JWxWINY-wlGOPM-H7C0A9Hy-z8M",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"React for Beginners\",\r\n  \"description\": \"A complete guide to React\",\r\n  \"thumbnail\": \"https://example.com/react.jpg\",\r\n  \"categoryId\": \"683764c3e572d08d79058814\",   \r\n  \"subCategoryId\": \"6838a630ead1ab833ae8e83a\", \r\n  \"level\": \"beginner\",\r\n  \"price\": 49.99,\r\n  \"currency\": \"USD\",\r\n  \"duration\": \"8 weeks\",\r\n  \"instructorId\": \"6644c5587d50b30ff87fa169\",\r\n  \"isPublished\": true,\r\n  \"enrollmentType\": \"open\",\r\n  \"maxStudents\": 50,\r\n  \"tags\": [\"react\", \"frontend\"],\r\n  \"prerequisites\": [\"HTML\", \"JavaScript\"],\r\n  \"completionCriteria\": \"Complete all modules\",\r\n  \"certificateTemplate\": \"basic\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/courses/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"courses",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODM4YzVkOWQ4MzkyMjY2NGRhMjc0NzUiLCJyb2xlcyI6ImFkbWluIiwiaWF0IjoxNzQ4NjI5MzU3LCJleHAiOjE3NDkwNjEzNTd9.DqIv9EL33fGdRZG1JWxWINY-wlGOPM-H7C0A9Hy-z8M",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"JavaScript Fundamentals 12 new\",\r\n  \"description\": \"Master the basics of JavaScript programming\",\r\n  \"thumbnail\": \"https://example.com/js-thumb.jpg\",\r\n  \"categoryId\": \"6838a610ead1ab833ae8e835\",\r\n  \"subCategoryId\": \"6838a8a9b93da5a319b92e38\",\r\n  \"level\": \"beginner\",\r\n  \"price\": 29.99,\r\n  \"currency\": \"USD\",\r\n  \"duration\": \"600\",\r\n  \"instructorId\": \"6838b721d95033e6e72ef0d2\",\r\n  \"isPublished\": true,\r\n  \"enrollmentType\": \"paid\",\r\n  \"maxStudents\": 100,\r\n  \"tags\": [\"javascript\", \"programming\", \"frontend\"],\r\n  \"prerequisites\": [],\r\n  \"completionCriteria\": \"Finish all video lessons and quizzes\",\r\n  \"certificateTemplate\": \"basic_certificate\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/courses/6839f9745520d4d5e477ccea",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"courses",
+								"6839f9745520d4d5e477ccea"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get Copy",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODM4YzVkOWQ4MzkyMjY2NGRhMjc0NzUiLCJyb2xlcyI6ImFkbWluIiwiaWF0IjoxNzQ4NjI5MzU3LCJleHAiOjE3NDkwNjEzNTd9.DqIv9EL33fGdRZG1JWxWINY-wlGOPM-H7C0A9Hy-z8M",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"JavaScript Fundamentals 12 new\",\r\n  \"description\": \"Master the basics of JavaScript programming\",\r\n  \"thumbnail\": \"https://example.com/js-thumb.jpg\",\r\n  \"categoryId\": \"6838a610ead1ab833ae8e835\",\r\n  \"subCategoryId\": \"6838a8a9b93da5a319b92e38\",\r\n  \"level\": \"beginner\",\r\n  \"price\": 29.99,\r\n  \"currency\": \"USD\",\r\n  \"duration\": \"600\",\r\n  \"instructorId\": \"6838b721d95033e6e72ef0d2\",\r\n  \"isPublished\": true,\r\n  \"enrollmentType\": \"paid\",\r\n  \"maxStudents\": 100,\r\n  \"tags\": [\"javascript\", \"programming\", \"frontend\"],\r\n  \"prerequisites\": [],\r\n  \"completionCriteria\": \"Finish all video lessons and quizzes\",\r\n  \"certificateTemplate\": \"basic_certificate\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/courses/6839faa2f7b53a6ce0671331",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"courses",
+								"6839faa2f7b53a6ce0671331"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/courses/68489d31a5fbd949b118ca48/contents",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"courses",
+								"68489d31a5fbd949b118ca48",
+								"contents"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Lesson",
+			"item": [
+				{
+					"name": "New Request",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODM4YzVkOWQ4MzkyMjY2NGRhMjc0NzUiLCJyb2xlcyI6ImFkbWluIiwiaWF0IjoxNzQ5NDg5NzkwLCJleHAiOjE3NDk5MjE3OTB9.en_yejALXW6tqo2TeVG-2rhEPUQAPW8uWDcreAZWSIU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"moduleId\": \"6839eaba8ba3964b2fabe68c\",\r\n  \"title\": \"Introduction to Node.js\",\r\n  \"description\": \"This lesson covers the basics of Node.js\",\r\n  \"type\": \"video\",\r\n  \"content\": {\r\n    \"videoUrl\": \"https://example.com/video.mp4\",\r\n    \"transcript\": \"Introduction transcript text\"\r\n  },\r\n  \"order\": 1,\r\n  \"duration\": 30,\r\n  \"isRequired\": true,\r\n  \"unlockConditions\": {},\r\n  \"resources\": {}\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/lesson/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"lesson",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "filters",
+			"item": [
+				{
+					"name": "New Request",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"language\": \"English\",\r\n  \"category\": \"6839e68e1e2ccfe1a16712f9\",\r\n  \"subCategory\": \"6838a8a9b93da5a319b92e38\",\r\n  \"title\": \"Language of Instruction new as new\",\r\n  \"filterOptions\": [\"English\", \"Hindi\", \"Gujarati\", \"Other\"]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/filter/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"filter",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"language\": \"English\",\r\n  \"category\": \"6838a610ead1ab833ae8e835\",\r\n  \"subCategory\": \"6838a8a9b93da5a319b92e38\",\r\n  \"title\": \"Language of Instruction new \",\r\n  \"filterOptions\": [\"English\", \"Hindi\", \"Gujarati\", \"Other\"]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/filter/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"filter",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "categoryId",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"language\": \"English\",\r\n  \"category\": \"6838a610ead1ab833ae8e835\",\r\n  \"subCategory\": \"6838a8a9b93da5a319b92e38\",\r\n  \"title\": \"Language of Instruction new \",\r\n  \"filterOptions\": [\"English\", \"Hindi\", \"Gujarati\", \"Other\"]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/filter/options/category/6839e68e1e2ccfe1a16712f9?subCategoryId=683a0a8dacc8bba791ccc295",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"filter",
+								"options",
+								"category",
+								"6839e68e1e2ccfe1a16712f9"
+							],
+							"query": [
+								{
+									"key": "subCategoryId",
+									"value": "683a0a8dacc8bba791ccc295"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "subCategoryId",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"language\": \"English\",\r\n  \"category\": \"6838a610ead1ab833ae8e835\",\r\n  \"subCategory\": \"6838a8a9b93da5a319b92e38\",\r\n  \"title\": \"Language of Instruction new \",\r\n  \"filterOptions\": [\"English\", \"Hindi\", \"Gujarati\", \"Other\"]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/filter?subCategoryId=683a0a8dacc8bba791ccc295",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"filter"
+							],
+							"query": [
+								{
+									"key": "subCategoryId",
+									"value": "683a0a8dacc8bba791ccc295"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getbyid",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"language\": \"English\",\r\n  \"category\": \"6838a610ead1ab833ae8e835\",\r\n  \"subCategory\": \"6838a8a9b93da5a319b92e38\",\r\n  \"title\": \"Language of Instruction new \",\r\n  \"filterOptions\": [\"English\", \"Hindi\", \"Gujarati\", \"Other\"]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/filter/683de64d7f58c03bd9aacf60",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"filter",
+								"683de64d7f58c03bd9aacf60"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request Copy",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"language\": \"English update\",\r\n  \"category\": \"6838a610ead1ab833ae8e835\",\r\n  \"subCategory\": \"6838a8a9b93da5a319b92e38\",\r\n  \"title\": \"Language of Instruction new update \",\r\n  \"filterOptions\": [\"English\", \"Hindi\", \"Gujarati\", \"Other\"]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/filter/683de64d7f58c03bd9aacf60",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"filter",
+								"683de64d7f58c03bd9aacf60"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request Copy 2",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"language\": \"English update\",\r\n  \"category\": \"6838a610ead1ab833ae8e835\",\r\n  \"subCategory\": \"6838a8a9b93da5a319b92e38\",\r\n  \"title\": \"Language of Instruction new update \",\r\n  \"filterOptions\": [\"English\", \"Hindi\", \"Gujarati\", \"Other\"]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/filter/683de6477f58c03bd9aacf5b",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"filter",
+								"683de6477f58c03bd9aacf5b"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "subcategories-By-categoryid",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/filter/subcategories/by-category/6838c8f86705a5a0afe4874a",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"filter",
+								"subcategories",
+								"by-category",
+								"6838c8f86705a5a0afe4874a"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "lessons",
+			"item": [
+				{
+					"name": "http://your-api-domain/api/lessons",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODM4YzVkOWQ4MzkyMjY2NGRhMjc0NzUiLCJyb2xlcyI6ImFkbWluIiwiaWF0IjoxNzQ5MDU3ODc3LCJleHAiOjE3NDk0ODk4Nzd9.QNtnFWGdeHQghULohucC2o0fe2gzxRzfl7Eaa9hBkug",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer YOUR_ACCESS_TOKEN"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "language",
+									"value": "English",
+									"type": "text"
+								},
+								{
+									"key": "section",
+									"value": "6838b95fe44510b40b0b02b9",
+									"type": "text"
+								},
+								{
+									"key": "source",
+									"value": "Lesson file from local or link",
+									"type": "text"
+								},
+								{
+									"key": "accessibility",
+									"value": "free",
+									"type": "text"
+								},
+								{
+									"key": "uploadType",
+									"value": "direct",
+									"type": "text"
+								},
+								{
+									"key": "fileUrl",
+									"type": "file",
+									"src": "postman-cloud:///1f03c4d8-0d7a-4590-b77e-3bd0b3a6f89f"
+								},
+								{
+									"key": "isActive",
+									"value": "true",
+									"type": "text"
+								},
+								{
+									"key": "dripContent[isEnabled]",
+									"value": "true",
+									"type": "text"
+								},
+								{
+									"key": "dripContent[forcePreviousParts]",
+									"value": "false",
+									"type": "text"
+								},
+								{
+									"key": "dripContent[accessAfterDays]",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "moduleId",
+									"value": "6838c9d06cd1bf79835eaf09",
+									"type": "text"
+								},
+								{
+									"key": "title",
+									"value": "Introduction to JavaScript",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "This lesson covers the basics of JavaScript.",
+									"type": "text"
+								},
+								{
+									"key": "type",
+									"value": "video",
+									"type": "text"
+								},
+								{
+									"key": "content",
+									"value": "15:32",
+									"type": "text"
+								},
+								{
+									"key": "content[transcript]",
+									"value": "This is a sample transcript...",
+									"type": "text"
+								},
+								{
+									"key": "order",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "duration",
+									"value": "15",
+									"type": "text"
+								},
+								{
+									"key": "isRequired",
+									"value": "true",
+									"type": "text"
+								},
+								{
+									"key": "unlockConditions[mustCompletePrevious]",
+									"value": "true",
+									"type": "text"
+								},
+								{
+									"key": "resources[pdf]",
+									"type": "file",
+									"src": []
+								},
+								{
+									"key": "resources[slides]",
+									"value": "https://example.com/resources/js-slides.pptx",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:5000/video/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"video",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request Copy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "video",
+									"type": "file",
+									"src": "7Ze2UMb4y/React.js SignUp Dashboard _ TailAdmin - Next.js Admin Dashboard Template - Google Chrome 2025-06-04 11-42-32.mp4"
+								},
+								{
+									"key": "lessonId",
+									"value": " lesson_id_here",
+									"type": "text"
+								},
+								{
+									"key": "sourcePlatform",
+									"value": " videocypher",
+									"type": "text"
+								},
+								{
+									"key": "title",
+									"value": " My Video Lesson",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": " Lesson description",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:5000/video/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"video",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Enrollment",
+			"item": [
+				{
+					"name": "New Request",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userId\": \"68360bb682deef1f0c9e7564\", \r\n  \"courseId\": \"6849b5c55d5996681d0cd722\", \r\n  \"accessType\": \"lifetime\",\r\n  \"status\": \"active\",\r\n  \"enrollmentSource\": \"purchase\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/enrollment/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"enrollment",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Course Enrollments",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {your_token}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/enrollment/courses/{courseId}/enrollments",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"enrollment",
+								"courses",
+								"{courseId}",
+								"enrollments"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Add Quiz",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Cookie",
+						"value": "accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODM4YjRjNTA3OTY4ODQxNDQ5MzA0YzIiLCJyb2xlcyI6ImFkbWluIiwiaWF0IjoxNzQ4NTQ2OTQ1LCJleHAiOjE3NDg5Nzg5NDV9.2kAZTryhL8-p1XS0vNuaI9ejuWgD_FlNvFBo1xsCrIE; accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODQxZDI5NDY5MmM4MjI3YTJmMjY4YWUiLCJyb2xlcyI6ImFkbWluIiwiaWF0IjoxNzQ5MTQ0OTY3LCJleHAiOjE3NDk1NzY5Njd9.7PFZ1iQemgWsHobVilGPpoeVS72MMObg2jPAl3UmfjU; is_auth=true; refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODQxZDI5NDY5MmM4MjI3YTJmMjY4YWUiLCJyb2xlcyI6ImFkbWluIiwiaWF0IjoxNzQ5MTQ0OTY3LCJleHAiOjE3NTE3MzY5Njd9.sU30WG3cNuGYvjnmsQuMkJJ5w3eRuxpZuFHxqEE7wRk"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODQxZDI5NDY5MmM4MjI3YTJmMjY4YWUiLCJyb2xlcyI6ImFkbWluIiwiaWF0IjoxNzQ5MTQ0OTQzLCJleHAiOjE3NDk1NzY5NDN9.rzem7-X-cRYg6rNIv3MLz0czQZZV5YFe5zpHauLKHXQ"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"course\": \"6840a70f567d1884cc1ba910\",\r\n    \"lesson\": \"6840aab4bbeca412b0037e17\",\r\n    \"questions\": [\r\n      {\r\n        \"question\": \"What is 2+2?\",\r\n        \"options\": [\"2\", \"3\", \"4\", \"5\"],\r\n        \"correctAnswer\": \"4\"\r\n      },\r\n      {\r\n        \"question\": \"What is the capital of France?\",\r\n        \"options\": [\"Paris\", \"London\", \"Berlin\", \"Madrid\"],\r\n        \"correctAnswer\": \"Paris\"\r\n      }\r\n    ],\r\n    \"passMark\": 80\r\n  }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5000/quiz",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"quiz"
+					]
+				},
+				"description": "Generated from cURL: curl --location 'localhost:5000/quiz' \\\r\n--header 'Content-Type: application/json' \\\r\n--header 'Cookie: accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODM4YjRjNTA3OTY4ODQxNDQ5MzA0YzIiLCJyb2xlcyI6ImFkbWluIiwiaWF0IjoxNzQ4NTQ2OTQ1LCJleHAiOjE3NDg5Nzg5NDV9.2kAZTryhL8-p1XS0vNuaI9ejuWgD_FlNvFBo1xsCrIE; accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODQxZDI5NDY5MmM4MjI3YTJmMjY4YWUiLCJyb2xlcyI6ImFkbWluIiwiaWF0IjoxNzQ5MTQ0OTY3LCJleHAiOjE3NDk1NzY5Njd9.7PFZ1iQemgWsHobVilGPpoeVS72MMObg2jPAl3UmfjU; is_auth=true; refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODQxZDI5NDY5MmM4MjI3YTJmMjY4YWUiLCJyb2xlcyI6ImFkbWluIiwiaWF0IjoxNzQ5MTQ0OTY3LCJleHAiOjE3NTE3MzY5Njd9.sU30WG3cNuGYvjnmsQuMkJJ5w3eRuxpZuFHxqEE7wRk' \\\r\n--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODQxZDI5NDY5MmM4MjI3YTJmMjY4YWUiLCJyb2xlcyI6ImFkbWluIiwiaWF0IjoxNzQ5MTQ0OTQzLCJleHAiOjE3NDk1NzY5NDN9.rzem7-X-cRYg6rNIv3MLz0czQZZV5YFe5zpHauLKHXQ' \\\r\n--data '{\r\n    \"course\": \"6840a70f567d1884cc1ba910\",\r\n    \"lesson\": \"6840aab4bbeca412b0037e17\",\r\n    \"questions\": [\r\n      {\r\n        \"question\": \"What is 2+2?\",\r\n        \"options\": [\"2\", \"3\", \"4\", \"5\"],\r\n        \"correctAnswer\": \"4\"\r\n      },\r\n      {\r\n        \"question\": \"What is the capital of France?\",\r\n        \"options\": [\"Paris\", \"London\", \"Berlin\", \"Madrid\"],\r\n        \"correctAnswer\": \"Paris\"\r\n      }\r\n    ],\r\n    \"passMark\": 80\r\n  }'"
+			},
+			"response": []
+		}
+	]
+}

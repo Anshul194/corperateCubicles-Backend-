@@ -1,0 +1,97 @@
+{
+  "info": {
+    "name": "LMS Leaderboard APIs",
+    "description": "Test collection for leaderboard system",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Save Leaderboard Settings (Admin)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"actionXP\": { \"course_complete\": 100, \"quiz_pass\": 50, \"forum_post\": 10 },\n  \"levelRanks\": [\n    { \"minXP\": 0, \"maxXP\": 99, \"levelName\": \"Beginner\" },\n    { \"minXP\": 100, \"maxXP\": 499, \"levelName\": \"Intermediate\" },\n    { \"minXP\": 500, \"maxXP\": 9999, \"levelName\": \"Expert\" }\n  ]\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/leaderboard/admin/leaderboard/settings",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["leaderboard", "admin", "leaderboard", "settings"]
+        }
+      }
+    },
+    {
+      "name": "Get Leaderboard Settings (Admin)",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:3000/leaderboard/admin/leaderboard/settings",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["leaderboard", "admin", "leaderboard", "settings"]
+        }
+      }
+    },
+    {
+      "name": "Update Leaderboard (User Action)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"userId\": \"<USER_ID>\",\n  \"action\": \"course_complete\",\n  \"referenceType\": \"course\",\n  \"referenceId\": \"<COURSE_ID>\",\n  \"remark\": \"Completed course\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/leaderboard/leaderboard/update",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["leaderboard", "leaderboard", "update"]
+        }
+      }
+    },
+    {
+      "name": "Get Global Leaderboard",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:3000/leaderboard/leaderboard/global",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["leaderboard", "leaderboard", "global"]
+        }
+      }
+    },
+    {
+      "name": "Get User Leaderboard Entry + Rank",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:3000/leaderboard/leaderboard/user/<USER_ID>",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["leaderboard", "leaderboard", "user", "<USER_ID>"]
+        }
+      }
+    },
+    {
+      "name": "Get User XP Transaction History",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:3000/leaderboard/leaderboard/history/<USER_ID>",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["leaderboard", "leaderboard", "history", "<USER_ID>"]
+        }
+      }
+    }
+  ]
+}

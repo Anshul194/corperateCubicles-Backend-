@@ -1,0 +1,512 @@
+{
+	"info": {
+		"_postman_id": "news-api-collection-v2",
+		"name": "News API - Complete Collection",
+		"description": "Complete Postman collection for News API including all CRUD operations, user interactions (like, view, share), and user lists",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Public Endpoints",
+			"item": [
+				{
+					"name": "Get All News",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/news?page=1&limit=10&sortBy=publishedAt&sortOrder=desc&status=active",
+							"host": ["{{baseUrl}}"],
+							"path": ["news"],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"description": "Page number"
+								},
+								{
+									"key": "limit",
+									"value": "10",
+									"description": "Items per page"
+								},
+								{
+									"key": "sortBy",
+									"value": "publishedAt",
+									"description": "Sort field (publishedAt, createdAt, stats.views, etc.)"
+								},
+								{
+									"key": "sortOrder",
+									"value": "desc",
+									"description": "Sort order (asc/desc)"
+								},
+								{
+									"key": "status",
+									"value": "active",
+									"description": "Filter by status"
+								},
+								{
+									"key": "category",
+									"value": "",
+									"description": "Filter by category",
+									"disabled": true
+								},
+								{
+									"key": "tag",
+									"value": "",
+									"description": "Filter by tag",
+									"disabled": true
+								},
+								{
+									"key": "language",
+									"value": "",
+									"description": "Filter by language",
+									"disabled": true
+								},
+								{
+									"key": "country",
+									"value": "",
+									"description": "Filter by country",
+									"disabled": true
+								},
+								{
+									"key": "isBreaking",
+									"value": "",
+									"description": "Filter breaking news (true/false)",
+									"disabled": true
+								},
+								{
+									"key": "search",
+									"value": "",
+									"description": "Search text",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Get all news articles with optional filters and pagination"
+					}
+				},
+				{
+					"name": "Search News",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/news/search?q=technology&limit=20",
+							"host": ["{{baseUrl}}"],
+							"path": ["news", "search"],
+							"query": [
+								{
+									"key": "q",
+									"value": "technology",
+									"description": "Search query"
+								},
+								{
+									"key": "limit",
+									"value": "20",
+									"description": "Maximum results"
+								}
+							]
+						},
+						"description": "Search news articles by text"
+					}
+				},
+				{
+					"name": "Get News by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/news/{{newsId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["news", "{{newsId}}"]
+						},
+						"description": "Get a single news article by ID. Automatically tracks view if authenticated."
+					}
+				},
+				{
+					"name": "Get News by Slug",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/news/slug/{{newsSlug}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["news", "slug", "{{newsSlug}}"]
+						},
+						"description": "Get a single news article by slug. Automatically tracks view if authenticated."
+					}
+				},
+				{
+					"name": "Increment News Stats",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"type\": \"views\",\n  \"userId\": \"{{userId}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/news/{{newsId}}/stats",
+							"host": ["{{baseUrl}}"],
+							"path": ["news", "{{newsId}}", "stats"]
+						},
+						"description": "Increment views/likes/shares. If userId is provided and user is authenticated, tracks user interaction."
+					}
+				},
+				{
+					"name": "Get Users Who Viewed",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/news/{{newsId}}/users/viewed?page=1&limit=20",
+							"host": ["{{baseUrl}}"],
+							"path": ["news", "{{newsId}}", "users", "viewed"],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "20"
+								}
+							]
+						},
+						"description": "Get paginated list of users who viewed the news"
+					}
+				},
+				{
+					"name": "Get Users Who Liked",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/news/{{newsId}}/users/liked?page=1&limit=20",
+							"host": ["{{baseUrl}}"],
+							"path": ["news", "{{newsId}}", "users", "liked"],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "20"
+								}
+							]
+						},
+						"description": "Get paginated list of users who liked the news"
+					}
+				},
+				{
+					"name": "Get Users Who Shared",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/news/{{newsId}}/users/shared?page=1&limit=20",
+							"host": ["{{baseUrl}}"],
+							"path": ["news", "{{newsId}}", "users", "shared"],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "20"
+								}
+							]
+						},
+						"description": "Get paginated list of users who shared the news"
+					}
+				},
+				{
+					"name": "Like News by User ID",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/news/{{newsId}}/like/{{userId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["news", "{{newsId}}", "like", "{{userId}}"]
+						},
+						"description": "Like a news article for a specific user (no authentication required)"
+					}
+				},
+				{
+					"name": "View News by User ID",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/news/{{newsId}}/view/{{userId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["news", "{{newsId}}", "view", "{{userId}}"]
+						},
+						"description": "Track view for a specific user (no authentication required)"
+					}
+				},
+				{
+					"name": "Share News by User ID",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/news/{{newsId}}/share/{{userId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["news", "{{newsId}}", "share", "{{userId}}"]
+						},
+						"description": "Share news for a specific user (no authentication required)"
+					}
+				}
+			]
+		},
+		{
+			"name": "Authenticated Endpoints",
+			"item": [
+				{
+					"name": "Like News (Authenticated)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/news/{{newsId}}/like",
+							"host": ["{{baseUrl}}"],
+							"path": ["news", "{{newsId}}", "like"]
+						},
+						"description": "Like news using authenticated user from token"
+					}
+				},
+				{
+					"name": "Unlike News (Authenticated)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/news/{{newsId}}/like",
+							"host": ["{{baseUrl}}"],
+							"path": ["news", "{{newsId}}", "like"]
+						},
+						"description": "Unlike news using authenticated user from token"
+					}
+				},
+				{
+					"name": "Toggle Like (Authenticated)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/news/{{newsId}}/toggle-like",
+							"host": ["{{baseUrl}}"],
+							"path": ["news", "{{newsId}}", "toggle-like"]
+						},
+						"description": "Toggle like/unlike for authenticated user"
+					}
+				},
+				{
+					"name": "View News (Authenticated)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/news/{{newsId}}/view",
+							"host": ["{{baseUrl}}"],
+							"path": ["news", "{{newsId}}", "view"]
+						},
+						"description": "Track view for authenticated user"
+					}
+				},
+				{
+					"name": "Share News (Authenticated)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/news/{{newsId}}/share",
+							"host": ["{{baseUrl}}"],
+							"path": ["news", "{{newsId}}", "share"]
+						},
+						"description": "Share news for authenticated user"
+					}
+				},
+				{
+					"name": "Check User Interaction Status",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/news/{{newsId}}/interaction-status",
+							"host": ["{{baseUrl}}"],
+							"path": ["news", "{{newsId}}", "interaction-status"]
+						},
+						"description": "Check if authenticated user has viewed, liked, or shared the news"
+					}
+				}
+			]
+		},
+		{
+			"name": "Admin Endpoints",
+			"item": [
+				{
+					"name": "Create News",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Breaking News: Technology Update\",\n  \"summary\": \"A brief summary of the news article\",\n  \"content\": \"Full content of the news article...\",\n  \"source\": {\n    \"id\": \"source-id-123\",\n    \"name\": \"News Source Name\",\n    \"url\": \"https://example.com/source\"\n  },\n  \"author\": {\n    \"name\": \"Author Name\",\n    \"profileUrl\": \"https://example.com/author\"\n  },\n  \"url\": \"https://example.com/news/article\",\n  \"imageUrl\": \"https://example.com/image.jpg\",\n  \"videoUrl\": \"\",\n  \"publishedAt\": \"2024-01-15T10:00:00Z\",\n  \"language\": \"en\",\n  \"country\": \"US\",\n  \"categories\": [\"technology\", \"science\"],\n  \"tags\": [\"AI\", \"innovation\"],\n  \"sentiment\": {\n    \"score\": 0.8,\n    \"label\": \"positive\"\n  },\n  \"entities\": {\n    \"persons\": [\"John Doe\"],\n    \"organizations\": [\"Tech Corp\"],\n    \"locations\": [\"San Francisco\"]\n  },\n  \"isBreaking\": false,\n  \"isPremium\": false,\n  \"status\": \"active\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/news",
+							"host": ["{{baseUrl}}"],
+							"path": ["news"]
+						},
+						"description": "Create a new news article (Admin only). Slug is auto-generated if not provided."
+					}
+				},
+				{
+					"name": "Update News",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Updated News Title\",\n  \"summary\": \"Updated summary\",\n  \"content\": \"Updated content\",\n  \"status\": \"active\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/news/{{newsId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["news", "{{newsId}}"]
+						},
+						"description": "Update an existing news article (Admin only)"
+					}
+				},
+				{
+					"name": "Delete News",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/news/{{newsId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["news", "{{newsId}}"]
+						},
+						"description": "Delete a news article (Admin only)"
+					}
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:5000",
+			"type": "string"
+		},
+		{
+			"key": "accessToken",
+			"value": "your-access-token-here",
+			"type": "string"
+		},
+		{
+			"key": "newsId",
+			"value": "69413e4f1cde893ff51522db",
+			"type": "string"
+		},
+		{
+			"key": "userId",
+			"value": "507f1f77bcf86cd799439011",
+			"type": "string"
+		},
+		{
+			"key": "newsSlug",
+			"value": "breaking-news-technology-update",
+			"type": "string"
+		}
+	]
+}
+

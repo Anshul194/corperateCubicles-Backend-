@@ -1,0 +1,352 @@
+[{
+  "_id": {
+    "$oid": "687a06803c61f6e3923c30ee"
+  },
+  "name": "Super Admin",
+  "permissions": [
+    {
+      "module": "Categories",
+      "create": true,
+      "read": true,
+      "update": true,
+      "delete": true,
+      "_id": {
+        "$oid": "687a06803c61f6e3923c30f0"
+      }
+    },
+    {
+      "module": "Events",
+      "create": true,
+      "read": true,
+      "update": true,
+      "delete": true,
+      "_id": {
+        "$oid": "687a06803c61f6e3923c30f1"
+      }
+    },
+    {
+      "module": "Ticket",
+      "create": true,
+      "read": true,
+      "update": true,
+      "delete": true,
+      "_id": {
+        "$oid": "687a06803c61f6e3923c30f2"
+      }
+    },
+    {
+      "module": "Booking",
+      "create": true,
+      "read": true,
+      "update": true,
+      "delete": true,
+      "_id": {
+        "$oid": "687a06803c61f6e3923c30f3"
+      }
+    },
+    {
+      "module": "Role",
+      "create": true,
+      "read": true,
+      "update": true,
+      "delete": true,
+      "_id": {
+        "$oid": "687a06803c61f6e3923c30f4"
+      }
+    },
+    {
+      "module": "Admin",
+      "create": true,
+      "read": true,
+      "update": true,
+      "delete": true,
+      "_id": {
+        "$oid": "687a06803c61f6e3923c30f5"
+      }
+    },
+    {
+      "module": "User",
+      "create": true,
+      "read": true,
+      "update": true,
+      "delete": true,
+      "_id": {
+        "$oid": "687a93544a8bd9d6ea9d9a33"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-07-18T08:32:00.891Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "687a06af3c61f6e3923c311d"
+  },
+  "name": "Manager",
+  "permissions": [
+    {
+      "module": "Booking",
+      "create": true,
+      "read": true,
+      "update": true,
+      "delete": false,
+      "_id": {
+        "$oid": "687a06af3c61f6e3923c311f"
+      }
+    },
+    {
+      "module": "Event",
+      "create": false,
+      "read": true,
+      "update": true,
+      "delete": false,
+      "_id": {
+        "$oid": "687a07583c61f6e3923c314f"
+      }
+    },
+    {
+      "module": "Ticket",
+      "create": false,
+      "read": true,
+      "update": true,
+      "delete": false,
+      "_id": {
+        "$oid": "687a07583c61f6e3923c3150"
+      }
+    },
+    {
+      "module": "User",
+      "create": true,
+      "read": true,
+      "update": false,
+      "delete": false,
+      "_id": {
+        "$oid": "687a94234a8bd9d6ea9d9b34"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-07-18T08:32:47.193Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "687a8553c7163172b9725b1f"
+  },
+  "name": "Tester",
+  "permissions": [
+    {
+      "module": "Categories",
+      "create": true,
+      "read": true,
+      "update": true,
+      "delete": true,
+      "_id": {
+        "$oid": "687a8553c7163172b9725b21"
+      }
+    },
+    {
+      "module": "Events",
+      "create": true,
+      "read": true,
+      "update": true,
+      "delete": true,
+      "_id": {
+        "$oid": "687a8553c7163172b9725b22"
+      }
+    },
+    {
+      "module": "Ticket",
+      "create": true,
+      "read": true,
+      "update": true,
+      "delete": true,
+      "_id": {
+        "$oid": "687a8553c7163172b9725b23"
+      }
+    },
+    {
+      "module": "Booking",
+      "create": true,
+      "read": true,
+      "update": true,
+      "delete": true,
+      "_id": {
+        "$oid": "687a8553c7163172b9725b24"
+      }
+    },
+    {
+      "module": "Role",
+      "create": true,
+      "read": true,
+      "update": true,
+      "delete": true,
+      "_id": {
+        "$oid": "687a8553c7163172b9725b25"
+      }
+    },
+    {
+      "module": "Customer",
+      "create": true,
+      "read": true,
+      "update": true,
+      "delete": true,
+      "_id": {
+        "$oid": "687a85b2c7163172b9725b59"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-07-18T17:33:07.998Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "689c25bba8516db96afec6df"
+  },
+  "name": "Admin 3.0",
+  "permissions": [
+    {
+      "module": "Categories",
+      "create": true,
+      "read": true,
+      "update": true,
+      "delete": true,
+      "_id": {
+        "$oid": "689c25bba8516db96afec6e0"
+      }
+    },
+    {
+      "module": "Events",
+      "create": true,
+      "read": true,
+      "update": true,
+      "delete": true,
+      "_id": {
+        "$oid": "689c25bba8516db96afec6e1"
+      }
+    },
+    {
+      "module": "Booking",
+      "create": true,
+      "read": true,
+      "update": true,
+      "delete": true,
+      "_id": {
+        "$oid": "689c25bba8516db96afec6e2"
+      }
+    },
+    {
+      "module": "Ticket",
+      "create": true,
+      "read": true,
+      "update": true,
+      "delete": true,
+      "_id": {
+        "$oid": "689c25bba8516db96afec6e3"
+      }
+    },
+    {
+      "module": "User",
+      "create": true,
+      "read": true,
+      "update": true,
+      "delete": true,
+      "_id": {
+        "$oid": "689c25bba8516db96afec6e4"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-08-13T05:42:19.649Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "689c25faa8516db96afec764"
+  },
+  "name": "Admin 3.5",
+  "permissions": [
+    {
+      "module": "Categories",
+      "create": true,
+      "read": true,
+      "update": true,
+      "delete": true,
+      "_id": {
+        "$oid": "689c25faa8516db96afec765"
+      }
+    },
+    {
+      "module": "Events",
+      "create": true,
+      "read": true,
+      "update": true,
+      "delete": true,
+      "_id": {
+        "$oid": "689c25faa8516db96afec766"
+      }
+    },
+    {
+      "module": "Ticket",
+      "create": true,
+      "read": true,
+      "update": true,
+      "delete": true,
+      "_id": {
+        "$oid": "689c25faa8516db96afec767"
+      }
+    },
+    {
+      "module": "Booking",
+      "create": true,
+      "read": true,
+      "update": true,
+      "delete": true,
+      "_id": {
+        "$oid": "689c25faa8516db96afec768"
+      }
+    },
+    {
+      "module": "User",
+      "create": true,
+      "read": true,
+      "update": true,
+      "delete": true,
+      "_id": {
+        "$oid": "689c25faa8516db96afec769"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-08-13T05:43:22.678Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68b82496a856703c297f659b"
+  },
+  "name": "Admin view",
+  "permissions": [
+    {
+      "module": "Booking",
+      "create": false,
+      "read": true,
+      "update": false,
+      "delete": false,
+      "_id": {
+        "$oid": "68b82496a856703c297f659c"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-09-03T11:20:54.434Z"
+  },
+  "__v": 0
+}]
