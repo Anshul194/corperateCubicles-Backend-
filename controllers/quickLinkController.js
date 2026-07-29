@@ -1,4 +1,6 @@
-import quickLinkService from '../service/QuickLinkService.js';
+import QuickLinkService from '../service/QuickLinkService.js';
+
+const quickLinkService = new QuickLinkService();
 
 export const createQuickLink = async (req, res) => {
   try {

@@ -25,6 +25,23 @@ class QuickLinkRepository extends CrudRepository {
       throw error;
     }
   }
+
+  async aggregate(pipeline) {
+    return await this.model.aggregate(pipeline);
+  }
+
+  async updateById(id, updateData) {
+    try {
+      const updatedLink = await QuickLink.findOneAndUpdate(
+        { _id: id },
+        updateData,
+        { new: true }
+      );
+      return updatedLink;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 export default QuickLinkRepository;
