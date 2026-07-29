@@ -78,6 +78,12 @@ const ALLOWED_ORIGINS = [
   "https://edrila.nexprism.in",
   "https://lapaas.com",
   "https://www.lapaas.com",
+  "https://corperate-cubicles-admin-ba4i-8loh08han.vercel.app",
+  "https://corperate-cubicles-admin-ba4i-8loh08han.vercel.app/",
+
+  "https://corperate-cubicles.vercel.app",
+
+  "https://corperate-cubicles.vercel.app/"
 ];
 
 const corsOptions = {
@@ -147,11 +153,11 @@ const redisConfigured = !!(
 const limiterStore = (prefix) =>
   redisConfigured
     ? new RedisStore({
-        prefix, // distinct prefix per limiter so their counters never collide
-        // Resolve the shared client lazily per command: limiters are built at
-        // module load, before the async Redis connection is established.
-        sendCommand: async (...args) => (await initRedis()).sendCommand(args),
-      })
+      prefix, // distinct prefix per limiter so their counters never collide
+      // Resolve the shared client lazily per command: limiters are built at
+      // module load, before the async Redis connection is established.
+      sendCommand: async (...args) => (await initRedis()).sendCommand(args),
+    })
     : undefined; // undefined => express-rate-limit's default MemoryStore
 
 const globalLimiter = rateLimit({
@@ -227,7 +233,7 @@ app.use((err, req, res, next) => {
     ].filter(Boolean);
     for (const file of uploadedFiles) {
       if (file && file.path) {
-        fs.promises.unlink(file.path).catch(() => {});
+        fs.promises.unlink(file.path).catch(() => { });
       }
     }
   }
