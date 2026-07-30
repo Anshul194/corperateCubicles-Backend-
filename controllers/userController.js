@@ -827,7 +827,7 @@ export const login = async (req, res) => {
   try {
     //console.log("📩 Request Body user login:", req.body);
 
-    const { email, password, platform } = req.body;
+    const { email, password, deviceId, platform } = req.body;
     const isWeb = platform === 'web';
 
     const deviceInfo = {
@@ -840,7 +840,7 @@ export const login = async (req, res) => {
 
     // Validation
     if (!email || !password) {
-      await createLoginLog(null, "unknown", deviceInfo, "failed");
+      await createLoginLog(null, deviceId || "unknown", deviceInfo, "failed");
       return res.status(400).json({
         message: "Email and password are required",
         data: {},
@@ -854,7 +854,7 @@ export const login = async (req, res) => {
 
     // If login fails, log the attempt and return early
     if (!loginResult || !loginResult.success) {
-      await createLoginLog(null, "unknown", deviceInfo, "failed");
+      await createLoginLog(null, deviceId || "unknown", deviceInfo, "failed");
       return res.status(401).json({
         message: "Invalid email or password",
         data: {},
@@ -865,6 +865,22 @@ export const login = async (req, res) => {
 
     const user = loginResult?.userObj;
     const userId = user._id.toString();
+
+    // Record device for tracking — non-blocking
+    if (deviceId) {
+      try {
+        const existingDevice = await DeviceApproval.findOne({ userId, "deviceInfo.deviceId": deviceId });
+        if (!existingDevice) {
+          await DeviceApproval.create({
+            userId,
+            deviceInfo: { ...deviceInfo, deviceId },
+            status: "pending",
+          });
+        }
+      } catch (e) {
+        console.error("Device approval record error:", e.message);
+      }
+    }
 
     // Only generate tokens if everything is successful
     const { accessToken, refreshToken, accessTokenExp, refreshTokenExp } = await Token.generateTokens(user, platform || "web", null);
@@ -894,7 +910,7 @@ export const login = async (req, res) => {
         bio: user.bio,
         phone: user.phone,
         address: user.address,
-        company: user.company, // <-- add company object
+        company: user.company,
         createdAt: user.createdAt,
         updatedAt: user.updatedAt,
       })
@@ -905,7 +921,7 @@ export const login = async (req, res) => {
 
     // Create successful login log
     const sessionId = jwt.decode(accessToken)?.jti || accessToken.substring(0, 10);
-    await createLoginLog(userId, "unknown", deviceInfo, "success", sessionId);
+    await createLoginLog(userId, deviceId || "unknown", deviceInfo, "success", sessionId);
 
     // SECURITY: never return credential material. The user object was fetched with
     // includeSensitive (needed for the bcrypt comparison), so strip the password
@@ -940,7 +956,7 @@ export const login = async (req, res) => {
       deviceName: req.body.deviceName || "",
       ...parseUserAgent(req.headers["user-agent"] || ""),
     };
-    await createLoginLog(null, "unknown", deviceInfo, "failed");
+    await createLoginLog(null, req.body.deviceId || "unknown", deviceInfo, "failed");
     return res.status(500).json({
       message: "An error occurred during login",
       data: {},
@@ -2145,7 +2161,7 @@ export const sendOtpviaemail = async (req, res) => {
 
 export const googleLogin = async (req, res) => {
   try {
-    const { platform } = req.body;
+    const { platform, deviceId } = req.body;
 
     // SECURITY: this endpoint previously trusted a client-supplied `email`, so an
     // attacker could authenticate as ANY account (including admins) just by POSTing
@@ -2204,7 +2220,23 @@ export const googleLogin = async (req, res) => {
 
     const userId = newUser._id.toString();
 
-    const { accessToken, refreshToken, accessTokenExp, refreshTokenExp } = await Token.generateTokens(newUser, platform || "web", null);
+    // Record device for tracking — non-blocking
+    if (deviceId) {
+      try {
+        const existingDevice = await DeviceApproval.findOne({ userId, "deviceInfo.deviceId": deviceId });
+        if (!existingDevice) {
+          await DeviceApproval.create({
+            userId,
+            deviceInfo: { ...deviceInfo, deviceId },
+            status: "pending",
+          });
+        }
+      } catch (e) {
+        console.error("Device approval record error:", e.message);
+      }
+    }
+
+    const { accessToken, refreshToken, accessTokenExp, refreshTokenExp } = await Token.generateTokens(newUser, platform || "web", deviceId);
 
     const redis = await initRedis();
 
