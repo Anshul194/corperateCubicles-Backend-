@@ -2214,7 +2214,7 @@ export const googleLogin = async (req, res) => {
     };
 
     // Google signup or find user — `email` is now a Google-verified identity.
-    const newUser = await userService.googlesignup(
+    const { user: newUser, existed } = await userService.googlesignup(
       { email, fullName, role: "student", is_verify: true },
       res
     );
@@ -2224,17 +2224,34 @@ export const googleLogin = async (req, res) => {
     // Record device for tracking — non-blocking
     if (deviceId) {
       try {
-        const existingDevice = await DeviceApproval.findOne({ userId, deviceId });
-        if (!existingDevice) {
+        if (existed) {
+          // User already existed — this could be a different person logging in
+          // via Google with the same email. Always create a fresh pending request
+          // (deactivate old ones for this device) so the admin is notified.
+          await DeviceApproval.updateMany(
+            { userId, deviceId },
+            { $set: { isActive: false } }
+          );
           await DeviceApproval.create({
             userId,
             deviceId,
             deviceInfo,
             status: "pending",
           });
+        } else {
+          // New user — only create if no record exists for this device
+          const existingDevice = await DeviceApproval.findOne({ userId, deviceId });
+          if (!existingDevice) {
+            await DeviceApproval.create({
+              userId,
+              deviceId,
+              deviceInfo,
+              status: "pending",
+            });
+          }
         }
       } catch (e) {
-        console.error("Device approval record error:", e.message);
+        console.error("Device approval record error:", e.message, e);
       }
     }
 
