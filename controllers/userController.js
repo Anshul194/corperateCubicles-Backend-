@@ -869,11 +869,12 @@ export const login = async (req, res) => {
     // Record device for tracking — non-blocking
     if (deviceId) {
       try {
-        const existingDevice = await DeviceApproval.findOne({ userId, "deviceInfo.deviceId": deviceId });
+        const existingDevice = await DeviceApproval.findOne({ userId, deviceId });
         if (!existingDevice) {
           await DeviceApproval.create({
             userId,
-            deviceInfo: { ...deviceInfo, deviceId },
+            deviceId,
+            deviceInfo,
             status: "pending",
           });
         }
@@ -2223,11 +2224,12 @@ export const googleLogin = async (req, res) => {
     // Record device for tracking — non-blocking
     if (deviceId) {
       try {
-        const existingDevice = await DeviceApproval.findOne({ userId, "deviceInfo.deviceId": deviceId });
+        const existingDevice = await DeviceApproval.findOne({ userId, deviceId });
         if (!existingDevice) {
           await DeviceApproval.create({
             userId,
-            deviceInfo: { ...deviceInfo, deviceId },
+            deviceId,
+            deviceInfo,
             status: "pending",
           });
         }
