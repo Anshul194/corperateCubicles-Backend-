@@ -827,11 +827,11 @@ export const login = async (req, res) => {
   try {
     //console.log("📩 Request Body user login:", req.body);
 
-    const { email, password, deviceId, platform } = req.body;
+    const { email, password, platform } = req.body;
     const isWeb = platform === 'web';
 
     const deviceInfo = {
-      platform: platform || "android",
+      platform: platform || "web",
       userAgent: req.headers["user-agent"] || "",
       ipAddress: req.ip || req.connection.remoteAddress || "",
       deviceName: req.body.deviceName || "",
@@ -840,7 +840,7 @@ export const login = async (req, res) => {
 
     // Validation
     if (!email || !password) {
-      await createLoginLog(null, deviceId || "unknown", deviceInfo, "failed");
+      await createLoginLog(null, "unknown", deviceInfo, "failed");
       return res.status(400).json({
         message: "Email and password are required",
         data: {},
@@ -849,23 +849,12 @@ export const login = async (req, res) => {
       });
     }
 
-    // Require deviceId for all platforms except web
-    if (!isWeb && !deviceId) {
-      await createLoginLog(null, deviceId || "unknown", deviceInfo, "failed");
-      return res.status(400).json({
-        message: "Device ID is required to login from this platform",
-        data: {},
-        success: false,
-        err: { message: "Missing deviceId" },
-      });
-    }
-
     // Authenticate user credentials
     const loginResult = await userService.login(email, password);
 
     // If login fails, log the attempt and return early
     if (!loginResult || !loginResult.success) {
-      await createLoginLog(null, deviceId, deviceInfo, "failed");
+      await createLoginLog(null, "unknown", deviceInfo, "failed");
       return res.status(401).json({
         message: "Invalid email or password",
         data: {},
@@ -877,65 +866,8 @@ export const login = async (req, res) => {
     const user = loginResult?.userObj;
     const userId = user._id.toString();
 
-    let deviceStatus = "no_device_id";
-    let deviceApproval = null;
-
-    // Device approval checks only if login was successful and deviceId provided
-    // If user explicitly opted to skip device approval, bypass checks
-    if (user.skipDeviceApproval || isWeb) {
-      deviceStatus = isWeb ? 'web_skipped' : 'skipped';
-    } else if (deviceId) {
-      // Find the LATEST request for this device
-      deviceApproval = await DeviceApproval.findOne({
-        userId: user._id,
-        deviceId: deviceId,
-      }).sort({ requestedAt: -1 });
-
-      if (deviceApproval && deviceApproval.status === "approved" && deviceApproval.isActive) {
-        deviceStatus = "approved";
-      } else if (deviceApproval && deviceApproval.status === "pending") {
-        // Already pending, don't create a new one
-        deviceStatus = "pending";
-      } else {
-        // No record exists OR latest one was rejected OR it was approved but is now INACTIVE
-        // Create a BRAND NEW request
-        const totalDevices = await DeviceApproval.countDocuments({ userId: user._id });
-        const isFirstDevice = totalDevices === 0;
-
-        try {
-          // Deactivate any currently active device for this user
-          await DeviceApproval.updateMany(
-            { userId: user._id, isActive: true },
-            { $set: { isActive: false } }
-          );
-
-          // Create a BRAND NEW request (does not delete old ones, keeps history)
-          deviceApproval = new DeviceApproval({
-            userId: user._id,
-            deviceId: deviceId,
-            deviceInfo: deviceInfo,
-            status: isFirstDevice ? "approved" : "pending",
-            isFirstDevice: isFirstDevice,
-            isActive: isFirstDevice,
-            approvedAt: isFirstDevice ? new Date() : null,
-            requestedAt: new Date(),
-          });
-
-          await deviceApproval.save();
-          deviceStatus = isFirstDevice ? "first_device_auto_approved" : "pending";
-
-          if (!isFirstDevice) {
-            await createLoginLog(user._id, deviceId, deviceInfo, "device_pending");
-            deviceStatus = "pending";
-          }
-        } catch (error) {
-          throw error;
-        }
-      }
-    }
-
     // Only generate tokens if everything is successful
-    const { accessToken, refreshToken, accessTokenExp, refreshTokenExp } = await Token.generateTokens(user, platform || "app", deviceId);
+    const { accessToken, refreshToken, accessTokenExp, refreshTokenExp } = await Token.generateTokens(user, platform || "web", null);
 
     // Connect to Redis
     const redis = await initRedis();
@@ -973,7 +905,7 @@ export const login = async (req, res) => {
 
     // Create successful login log
     const sessionId = jwt.decode(accessToken)?.jti || accessToken.substring(0, 10);
-    await createLoginLog(userId, deviceId || "unknown", deviceInfo, "success", sessionId);
+    await createLoginLog(userId, "unknown", deviceInfo, "success", sessionId);
 
     // SECURITY: never return credential material. The user object was fetched with
     // includeSensitive (needed for the bcrypt comparison), so strip the password
@@ -996,26 +928,19 @@ export const login = async (req, res) => {
       data: {
         user: safeUser,
         ...(isWeb && process.env.NODE_ENV === "production" ? {} : { accessToken, refreshToken }),
-        deviceStatus: deviceStatus,
-        deviceApproval: deviceApproval ? {
-          id: deviceApproval._id,
-          status: deviceApproval.status,
-          isFirstDevice: deviceApproval.isFirstDevice,
-          isActive: deviceApproval.isActive
-        } : null
       },
       err: {},
     });
   } catch (err) {
     console.error("❌ Login Error:", err?.message);
     const deviceInfo = {
-      platform: req.body.platform || "android",
+      platform: req.body.platform || "web",
       userAgent: req.headers["user-agent"] || "",
       ipAddress: req.ip || req.connection.remoteAddress || "",
       deviceName: req.body.deviceName || "",
       ...parseUserAgent(req.headers["user-agent"] || ""),
     };
-    await createLoginLog(null, req.body.deviceId || "unknown", deviceInfo, "failed");
+    await createLoginLog(null, "unknown", deviceInfo, "failed");
     return res.status(500).json({
       message: "An error occurred during login",
       data: {},
@@ -2220,7 +2145,7 @@ export const sendOtpviaemail = async (req, res) => {
 
 export const googleLogin = async (req, res) => {
   try {
-    const { deviceId, platform } = req.body;
+    const { platform } = req.body;
 
     // SECURITY: this endpoint previously trusted a client-supplied `email`, so an
     // attacker could authenticate as ANY account (including admins) just by POSTing
@@ -2262,16 +2187,9 @@ export const googleLogin = async (req, res) => {
 
     const isWeb = platform === 'web';
 
-    if (!isWeb && !deviceId) {
-      return res.status(400).json({
-        message: "deviceId required",
-        success: false,
-      });
-    }
-
     // Build device info same as login
     const deviceInfo = {
-      platform: platform || "android",
+      platform: platform || "web",
       userAgent: req.headers["user-agent"] || "",
       ipAddress: req.ip || req.connection.remoteAddress || "",
       deviceName: req.body.deviceName || "",
@@ -2285,78 +2203,8 @@ export const googleLogin = async (req, res) => {
     );
 
     const userId = newUser._id.toString();
-    // DEVICE APPROVAL CHECK (same as login)
 
-    let deviceStatus = "no_device_id";
-    let deviceApproval = null;
-
-    if (newUser.skipDeviceApproval || isWeb) {
-      deviceStatus = isWeb ? 'web_skipped' : 'skipped';
-    } else if (deviceId) {
-
-      // Count total devices for this user
-      const totalDeviceCount = await DeviceApproval.countDocuments({ userId });
-
-      // Check if this particular deviceId exists already
-      deviceApproval = await DeviceApproval.findOne({ userId, deviceId });
-
-      if (!deviceApproval) {
-        const isFirstDevice = totalDeviceCount === 0;
-
-        try {
-          if (!isFirstDevice) {
-            // Make all old devices inactive
-            await DeviceApproval.updateMany(
-              { userId, isActive: true },
-              { $set: { isActive: false } }
-            );
-          }
-
-          // Create this user's device entry
-          deviceApproval = new DeviceApproval({
-            userId,
-            deviceId,
-            deviceInfo,
-            status: isFirstDevice ? "approved" : "pending",
-            isFirstDevice,
-            isActive: isFirstDevice,
-            approvedAt: isFirstDevice ? new Date() : null,
-          });
-
-          await deviceApproval.save();
-          deviceStatus = isFirstDevice ? "first_device_auto_approved" : "pending";
-
-          if (!isFirstDevice) {
-            deviceStatus = "pending";
-          }
-        } catch (error) {
-          if (error.code === 11000) {
-            deviceStatus = "pending";
-          } else {
-            throw error;
-          }
-        }
-      } else {
-        // If the device exists
-
-        if (deviceApproval.status === "pending") {
-          deviceStatus = "pending";
-        } else if (deviceApproval.status === "rejected") {
-          deviceStatus = "rejected";
-        } else if (deviceApproval.status === "approved" && !deviceApproval.isActive) {
-          deviceApproval.status = "pending";
-          deviceApproval.isActive = false;
-          deviceApproval.approvedAt = null;
-          deviceApproval.approvedBy = null;
-          await deviceApproval.save();
-          deviceStatus = "pending";
-        } else {
-          deviceStatus = "approved";
-        }
-      }
-    }
-    // Now generate tokens ONLY if approved
-    const { accessToken, refreshToken, accessTokenExp, refreshTokenExp } = await Token.generateTokens(newUser, platform || "web", deviceId);
+    const { accessToken, refreshToken, accessTokenExp, refreshTokenExp } = await Token.generateTokens(newUser, platform || "web", null);
 
     const redis = await initRedis();
 
@@ -2400,15 +2248,6 @@ export const googleLogin = async (req, res) => {
       data: {
         user: newUser,
         ...(isWeb && process.env.NODE_ENV === "production" ? {} : { accessToken, refreshToken }),
-        deviceStatus,
-        deviceApproval: deviceApproval
-          ? {
-            id: deviceApproval._id,
-            status: deviceApproval.status,
-            isFirstDevice: deviceApproval.isFirstDevice,
-            isActive: deviceApproval.isActive,
-          }
-          : null,
       },
     });
   } catch (err) {
