@@ -93,9 +93,16 @@ export const createCourse = async (req, res) => {
     // console.  log("📩 Request Body:", JSON.stringify(req.body, null, 2));
     // //console.log("📁 Uploaded Files:", JSON.stringify(req.files, null, 2));
 
-    // Restrict instructors to their own ID
+    // Restrict content creators (instructor/trainer) to their own ID
+    const isContentCreator =
+      req.user.role === "instructor" ||
+      req.user.role === "trainer" ||
+      req.user.roles === "instructor" ||
+      req.user.roles === "trainer";
     if (
-      req.user.roles === "instructor" &&
+      isContentCreator &&
+      req.body.instructorId &&
+      req.body.instructorId.trim() !== "" &&
       req.body.instructorId !== req.user._id.toString()
     ) {
       return res.status(403).json({
@@ -1145,14 +1152,21 @@ export const getAllCourses = async (req, res) => {
       filter.isFeatured = String(filterParams.isFeatured).toLowerCase() === 'true';
     }
 
-    // Role-based visibility for isPublished
+    // Role-based visibility for isPublished + ownership
     if (req.user?.role === "admin") {
       // Allow filter from query, or no filter (all courses)
       if (filterParams.hasOwnProperty("isPublished")) {
         filter.isPublished = filterParams.isPublished === "true";
       }
+    } else if (req.user?.role === "trainer" || req.user?.role === "instructor") {
+      // Content creators (trainer/instructor) only see courses they own —
+      // both published and draft. Admins/moderators/students see the catalog.
+      filter.instructorId = req.user._id;
+      if (filterParams.hasOwnProperty("isPublished")) {
+        filter.isPublished = filterParams.isPublished === "true";
+      }
     } else {
-      // Non-admins (student, instructor): only see published courses
+      // Non-admins (student, moderator, guest): only see published courses
       filter.isPublished = true;
     }
 

@@ -23,6 +23,7 @@ import {
 import UserRefreshToken from "../models/UserRefreshToken.js";
 import DeviceApproval from "../models/DeviceApproval.js";
 import LoginLog from "../models/LoginLog.js";
+import Role from "../models/Role.js";
 
 const userService = new UserService();
 
@@ -126,7 +127,7 @@ export const signup = async (req, res) => {
       message: "✅ Successfully created a new user",
       data: {
         user: newUser,
-        ...(isWeb && process.env.NODE_ENV === "production" ? {} : { accessToken, refreshToken }),
+        accessToken, refreshToken,
       },
       err: {},
     });
@@ -246,6 +247,16 @@ export const sendTestNotification = async (req, res) => {
 export const createUserByAdmin = async (req, res) => {
   try {
     const { email, password, fullName } = req.body;
+    // Admin may choose a role; default to student. Never let an admin be created here.
+    const VALID_ROLES = ["admin", "instructor", "student", "news_editor", "trainer", "moderator"];
+    let role = req.body.role || "student";
+    role = String(role).toLowerCase();
+    if (!VALID_ROLES.includes(role)) {
+      return res.status(400).json({
+        success: false,
+        message: `Invalid role. Must be one of: ${VALID_ROLES.join(", ")}`,
+      });
+    }
 
     if (!email || !password || !fullName) {
       return res.status(400).json({
@@ -262,21 +273,33 @@ export const createUserByAdmin = async (req, res) => {
       });
     }
 
-    // 👇 Role forcibly set to 'student'
     const newUser = await userService.adminCreateUser({
       email,
       password,
       fullName,
-      role: "student",
+      role,
     });
+
+    // Auto-assign the Role doc matching the base role (if one exists) so the
+    // user's RBAC `roles` reflect their base role too.
+    try {
+      const Role = mongoose.models.Role || (await import("../models/Role.js")).default;
+      const roleDoc = await Role.findOne({ name: role, isActive: true }).select("_id");
+      if (roleDoc) {
+        newUser.roles = [roleDoc._id];
+        await newUser.save();
+      }
+    } catch (e) {
+      console.error("Auto-assign role doc failed:", e.message);
+    }
 
     return res.status(201).json({
       success: true,
-      message: "✅ Student created successfully",
+      message: "✅ User created successfully",
       data: newUser,
     });
   } catch (error) {
-    console.error("❌ Admin create student error:", error);
+    console.error("❌ Admin create user error:", error);
     return res.status(500).json({
       success: false,
       message: error.message,
@@ -306,6 +329,42 @@ export const getMyProfile = async (req, res) => {
       });
     }
 
+    // Load role/permission info for sidebar filtering & RBAC
+    let roleDoc = null;
+    let permissionNames = [];
+    try {
+      const isSuperAdmin = ["admin", "superadmin", "ADMIN"].includes(user.role);
+      if (user.roles && user.roles.length > 0) {
+        roleDoc = await mongoose.models.Role?.find({
+          _id: { $in: user.roles },
+          isActive: true,
+        }).populate("permissions").populate("modules").lean();
+      } else if (user.role) {
+        const found = await mongoose.models.Role?.findOne({
+          name: user.role,
+          isActive: true,
+        }).populate("permissions").populate("modules").lean();
+        roleDoc = found ? [found] : null;
+      }
+      if (roleDoc && Array.isArray(roleDoc)) {
+        roleDoc.forEach((r) => {
+          (r.permissions || []).forEach((p) => {
+            if (p && p.name) permissionNames.push(p.name);
+            if (p && p.resource) permissionNames.push(`${p.resource}:${p.action}`);
+          });
+        });
+      }
+      // Admins/superadmins always have every permission & module.
+      if (isSuperAdmin) {
+        permissionNames = ["*"];
+        if (roleDoc && Array.isArray(roleDoc)) {
+          roleDoc = roleDoc.map((r) => ({ ...r, permissions: ["*"] }));
+        }
+      }
+    } catch (e) {
+      console.error("Error loading role permissions:", e);
+    }
+
     return res.status(200).json({
       success: true,
       message: "✅ User profile fetched successfully",
@@ -315,7 +374,10 @@ export const getMyProfile = async (req, res) => {
           email: user.email,
           fullName: user.fullName,
           is_verify: user.is_verify,
+          role: user.role,
           roles: user.roles,
+          roleDocs: roleDoc || null,
+          permissions: permissionNames,
           profilePicture: user.profilePicture,
           enrolledCourses: user.enrolledCourses,
           teachingCourses: user.teachingCourses,
@@ -944,7 +1006,7 @@ export const login = async (req, res) => {
       message: "✅ Successfully logged in",
       data: {
         user: safeUser,
-        ...(isWeb && process.env.NODE_ENV === "production" ? {} : { accessToken, refreshToken }),
+        accessToken, refreshToken,
       },
       err: {},
     });
@@ -2298,7 +2360,7 @@ export const googleLogin = async (req, res) => {
       message: "Google login successful",
       data: {
         user: newUser,
-        ...(isWeb && process.env.NODE_ENV === "production" ? {} : { accessToken, refreshToken }),
+        accessToken, refreshToken,
       },
     });
   } catch (err) {

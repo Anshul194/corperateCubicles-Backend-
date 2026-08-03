@@ -71,6 +71,7 @@ import lapaasTicketRouter from "./lapaasTicketRoutes.js";
 import aboutRouter from "./aboutRoutes.js";
 import siteContentRouter from "./siteContentRoutes.js";
 import quickLinkRouter from "./quickLinkRoutes.js";
+import roleRouter from "./roleRoutes.js";
 import { Route } from "express";
 
 router.get("/", (req, res) => {
@@ -146,6 +147,7 @@ router.use("/zoom", zoomRouter); // Zoom routes
 router.use("/lapaas-ticket", lapaasTicketRouter); // LapaasOS ticket ingestion
 router.use("/", aboutRouter); // About & Team routes
 router.use("/site-content", siteContentRouter); // Site content routes
+router.use("/roles", roleRouter); // Role, permission & module management routes
 
 // Image upload route for EditorJS (requires authentication)
 const handleMulterError = (err, req, res, next) => {

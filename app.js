@@ -107,6 +107,7 @@ const corsOptions = {
     "Authorization",
     "x-access-token",
     "x-refresh-token",
+    "x-device-id",
     "X-Requested-With",
   ],
   exposedHeaders: ["x-access-token", "x-refresh-token"],
@@ -123,7 +124,22 @@ app.set("trust proxy", 1);
 // cross-origin no-cors reads (Spectre-class side channels). Cross-origin media
 // embedding is only needed for /uploads, which is mounted BEFORE helmet and
 // sets its own `Cross-Origin-Resource-Policy: cross-origin` header above.
-app.use(helmet());
+app.use(
+  helmet({
+    crossOriginEmbedderPolicy: false,
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https://player.vdocipher.com"],
+        styleSrc: ["'self'", "'unsafe-inline'"],
+        frameSrc: ["'self'", "https://www.youtube.com", "https://player.vdocipher.com"],
+        imgSrc: ["'self'", "data:", "https://img.youtube.com", "https://i.ytimg.com"],
+        connectSrc: ["'self'", "https://api.vdocipher.com"],
+        mediaSrc: ["'self'"],
+      },
+    },
+  })
+);
 
 // Body parsers.
 // NOTE: previously express.json() was registered twice — first with the default

@@ -13,9 +13,21 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true },
   role: {
     type: String,
-    enum: ['admin', 'instructor', 'student','news_editor'],
+    enum: ['admin', 'instructor', 'student', 'news_editor', 'trainer', 'moderator'],
     default: 'student'
   },
+
+  // New: Support multiple roles via Role model references
+  roles: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Role'
+  }],
+
+  // New: Direct permissions assigned to user (overrides role-based permissions)
+  permissions: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Permission'
+  }],
 
   is_verify: { type: Boolean, default: false }, // New field for email verification
 
@@ -38,14 +50,12 @@ const userSchema = new mongoose.Schema({
   // Admin-specific
   isActive: { type: Boolean, default: true },
 
- documentation: [
-  {
-    name: { type: String, trim: true},
-    Doc: { type: String }
-  }
-],
-
-
+  documentation: [
+    {
+      name: { type: String, trim: true },
+      Doc: { type: String }
+    }
+  ],
 
   // Optional address fields
   address: {
@@ -74,30 +84,30 @@ const userSchema = new mongoose.Schema({
   passwordResetToken: { type: String, default: null },
   passwordResetExpiry: { type: Date, default: null },
 
-otp: { type: String, default: null },
-otpExpiry: { type: Date, default: null },
-otpAttempts: { type: Number, default: 0 },
-emailVerified: { type: Boolean, default: false },
-mobileVerified: { type: Boolean, default: false },
-isBanned: { type: Boolean, default: false },
-banReason: { type: String },
-isShadowBanned: { type: Boolean, default: false },
+  otp: { type: String, default: null },
+  otpExpiry: { type: Date, default: null },
+  otpAttempts: { type: Number, default: 0 },
+  emailVerified: { type: Boolean, default: false },
+  mobileVerified: { type: Boolean, default: false },
+  isBanned: { type: Boolean, default: false },
+  banReason: { type: String },
+  isShadowBanned: { type: Boolean, default: false },
 
   // Skip device approval on login when true
   skipDeviceApproval: { type: Boolean, default: false },
 
-
-// gstNumber and CompanyName grouped under company
-company: {
-  name: { type: String, trim: true },
-  gstNumber: { type: String, default: null }
-},
+  // gstNumber and CompanyName grouped under company
+  company: {
+    name: { type: String, trim: true },
+    gstNumber: { type: String, default: null }
+  },
 
 }, { timestamps: true });
 
 // Indexes
 userSchema.index({ email: 1 }, { unique: true });
 userSchema.index({ role: 1 });
+userSchema.index({ roles: 1 });
 userSchema.index({ passwordResetToken: 1 });
 userSchema.index({ passwordResetExpiry: 1 });
 userSchema.index({ isShadowBanned: 1 });

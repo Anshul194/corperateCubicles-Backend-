@@ -287,9 +287,9 @@ class CourseService {
         throw new Error("Maximum 5 tags allowed");
       }
 
-      // Restrict instructor updates to their own courses
+      // Restrict content creators (instructor/trainer) to updating their own courses
       if (
-        user.roles === "instructor" &&
+        (user.role === "instructor" || user.role === "trainer") &&
         instructorId &&
         instructorId !== user._id.toString()
       ) {
@@ -342,9 +342,9 @@ class CourseService {
         throw new Error("Course not found");
       }
 
-      // Restrict instructors to deleting their own courses
+      // Restrict content creators (instructor/trainer) to deleting their own courses
       if (
-        user.roles === "instructor" &&
+        (user.role === "instructor" || user.role === "trainer") &&
         course.instructorId.toString() !== user._id.toString()
       ) {
         throw new Error("Instructors can only delete their own courses");
