@@ -153,13 +153,20 @@ router.post("/:roleId/permissions", accessTokenAutoRefresh, passport.authenticat
     const { permissionIds } = req.body;
     const role = await Role.findById(roleId);
     if (!role) return res.status(404).json({ success: false, message: "Role not found" });
-    const existing = await RolePermission.find({ role: roleId });
-    const existingPermIds = existing.map((e) => String(e.permission));
-    const newPerms = permissionIds.filter((id) => !existingPermIds.includes(String(id)));
-    if (newPerms.length > 0) {
-      await RolePermission.insertMany(newPerms.map((pid) => ({ role: roleId, permission: pid, grantedBy: req.user._id })));
+    if (!Array.isArray(permissionIds)) {
+      return res.status(400).json({ success: false, message: "permissionIds must be an array" });
     }
-    const updatedRole = await Role.findById(roleId).populate("permissions");
+    // Full replacement so unchecking a permission in the role form actually removes it.
+    const deduped = [...new Set(permissionIds.map(String))];
+    const valid = await Permission.find({ _id: { $in: deduped }, isActive: true }).select("_id").lean();
+    role.permissions = valid.map((p) => p._id);
+    await role.save();
+    // Keep the legacy RolePermission join table in sync.
+    await RolePermission.deleteMany({ role: roleId });
+    if (role.permissions.length > 0) {
+      await RolePermission.insertMany(role.permissions.map((pid) => ({ role: roleId, permission: pid, grantedBy: req.user._id })));
+    }
+    const updatedRole = await Role.findById(roleId).populate("permissions").populate("modules");
     res.json({ success: true, data: updatedRole });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
@@ -185,12 +192,14 @@ router.post("/:roleId/modules", accessTokenAutoRefresh, passport.authenticate("j
     const { moduleIds } = req.body;
     const role = await Role.findById(roleId);
     if (!role) return res.status(404).json({ success: false, message: "Role not found" });
-    const existingModules = role.modules.map((m) => String(m));
-    const newModules = moduleIds.filter((id) => !existingModules.includes(String(id)));
-    if (newModules.length > 0) {
-      role.modules = [...role.modules, ...newModules];
-      await role.save();
+    if (!Array.isArray(moduleIds)) {
+      return res.status(400).json({ success: false, message: "moduleIds must be an array" });
     }
+    // Full replacement so unchecking a module in the role form actually removes it.
+    const deduped = [...new Set(moduleIds.map(String))];
+    const valid = await AppModule.find({ _id: { $in: deduped }, isActive: true }).select("_id").lean();
+    role.modules = valid.map((m) => m._id);
+    await role.save();
     const updatedRole = await Role.findById(roleId).populate("modules").populate("permissions");
     res.json({ success: true, data: updatedRole });
   } catch (error) {
