@@ -2,7 +2,7 @@ import QuizService from '../service/quizService.js';
 import { initRedis } from '../config/redisClient.js';
 import NotificationService from '../service/notificationService.js'; // Import notification service
 
-const quizService = new QuizService();
+
 
 export const createQuiz = async (req, res) => {
   try {

@@ -1,7 +1,7 @@
 import express from 'express';
 import { signup, updateProfile, login, getUserById, blockUser, changeUserPassword, forgotPassword, resetPassword, getMyProfile, deleteDocument, getUserDashboard, deleteUser, getOverviewDashboard, deleteEducation, createUserByAdmin, logoutAllSessions, updateFcmToken, sendTestNotification, banOrShadowBanUser, unbanUser,  listDeviceApprovalRequests,
   manageDeviceRequest, checkDeviceApprovalStatus,
-  searchUsers, sendOtpviaemail, verifyOtpviaemail, googleLogin, updateUserRole, logout} from '../controllers/userController.js';
+  searchUsers, sendOtpviaemail, verifyOtpviaemail, googleLogin, updateUserRole, logout, refreshToken} from '../controllers/userController.js';
 import accessTokenAutoRefresh from '../middlewares/accessTokenAutoRefresh.js';
 import { sendOtp, verifyOtp } from '../controllers/otpController.js';
 import passport from 'passport';
@@ -89,6 +89,10 @@ userRouter.get('/overview', accessTokenAutoRefresh, passport.authenticate('jwt',
 // Logout the current session. Intentionally NOT behind passport — a user must be
 // able to log out (and clear cookies) even with an expired/blacklisted token.
 userRouter.post('/logout', logout);
+
+// Refresh a session explicitly: exchange the refresh token (cookie or
+// X-Refresh-Token header) for a fresh access token. Used by the SPA on a 401.
+userRouter.post('/refresh-token', refreshToken);
 
 userRouter.post('/logout-all-sessions',
   accessTokenAutoRefresh,

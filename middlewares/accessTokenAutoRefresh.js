@@ -140,6 +140,16 @@ const accessTokenAutoRefresh = async (req, res, next) => {
         newRefreshTokenExp
       );
 
+      // Also expose the freshly-minted tokens in response headers. Web clients
+      // (admin panel / SPA) authenticate via the Authorization header + refresh
+      // token in localStorage, NOT via httpOnly cookies (which they cannot read).
+      // Without these headers the SPA keeps using its stale tokens: the next
+      // expiry would then attempt a refresh with a refresh token that was
+      // already rotated/deleted by generateTokens -> forced logout after every
+      // access-token lifetime. The CORS config already exposes both headers.
+      res.setHeader("x-access-token", newAccessToken);
+      res.setHeader("x-refresh-token", newRefreshToken);
+
       // Expose the freshly-minted token where passport reads it (cookie-first) so
       // the refreshed token is honoured, plus the Authorization header.
       req.cookies = req.cookies || {};

@@ -1689,6 +1689,57 @@ export const logoutAllSessions = async (req, res) => {
   }
 };
 
+// POST /refresh-token — exchange a valid refresh token for a fresh access token.
+// This is the explicit endpoint the admin SPA calls on a 401 to re-authenticate
+// its session (the auto-refresh middleware covers requests that DO carry the
+// refresh token; this endpoint lets the SPA refresh on its own terms).
+export const refreshToken = async (req, res) => {
+  try {
+    const tokenData = await Token.refreshAccessToken(req, res);
+
+    if (!tokenData) {
+      return res.status(401).json({
+        success: false,
+        message: "Failed to refresh access token",
+        data: {},
+        err: { message: "Invalid refresh token" }
+      });
+    }
+
+    const {
+      newAccessToken,
+      newRefreshToken,
+      newAccessTokenExp,
+      newRefreshTokenExp,
+    } = tokenData;
+
+    // Set new tokens as httpOnly cookies (web cookie auth) and expose them in
+    // response headers so the SPA can persist them to localStorage.
+    Token.setTokensCookies(res, newAccessToken, newRefreshToken);
+    res.setHeader("x-access-token", newAccessToken);
+    res.setHeader("x-refresh-token", newRefreshToken);
+
+    return res.status(200).json({
+      success: true,
+      message: "Token refreshed",
+      data: {
+        accessToken: newAccessToken,
+        refreshToken: newRefreshToken,
+        accessTokenExp: newAccessTokenExp,
+        refreshTokenExp: newRefreshTokenExp,
+      },
+      err: {},
+    });
+  } catch (err) {
+    return res.status(401).json({
+      success: false,
+      message: err.message || "Failed to refresh access token",
+      data: {},
+      err: err.message || "Invalid refresh token"
+    });
+  }
+};
+
 export const deleteUser = async (req, res) => {
   try {
     const userId = req.params.id;
